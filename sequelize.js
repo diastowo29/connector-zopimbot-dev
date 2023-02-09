@@ -1,11 +1,10 @@
 const Sequelize = require('sequelize')
 const sessionModel = require('./models/session')
 
-
 var sequelize_db;
 
-if (process.env.DATABASE_URL === undefined) {
-	sequelize_db = new Sequelize('sw-kata', 'postgres', 'R@hasia', {
+if (process.env.ENV === 'dev') {
+	sequelize_db = new Sequelize('zopimbot', 'postgres', 'R@hasia123', {
 	  host: 'localhost',
 	  dialect: 'postgres'
 	});
