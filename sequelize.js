@@ -3,7 +3,7 @@ const sessionModel = require('./models/session')
 
 var sequelize_db;
 
-if (process.env.ENV === 'dev') {
+if (process.env.NODE_ENV === 'development') {
 	sequelize_db = new Sequelize('zopimbot', 'postgres', 'R@hasia123', {
 	  host: 'localhost',
 	  dialect: 'postgres'

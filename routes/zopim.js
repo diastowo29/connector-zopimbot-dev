@@ -27,7 +27,7 @@ const logger = winston.createLogger({
 });
 
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Expres' });
 });
 
 router.post('/handover', function(req, res, next) {
