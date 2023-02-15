@@ -14,8 +14,8 @@ const axios = require('axios');
 const WebSocket = require('ws');
 
 const CHAT_API_URL = "https://chat-api.zopim.com/graphql/request";
-const APITOKEN = '8Ot0lh5g1YqJl8lSfWOIb7pDSCrrKdg3PocWo8WpBsk5K2L4qFpkvrvOv4Rm5L3f';
-const BOT_ID = 'cd40b30f-ee66-494e-b2d8-50efdb1f0493';
+const APITOKEN = '8Ot0lh5g1YqJl8lSfWOIb7pDSCrrKdg3PocWo8WpBsk5K2L4qFpkvrvOv4Rm5L3f'; //ENV VARIABLE
+const BOT_ID = 'cd40b30f-ee66-494e-b2d8-50efdb1f0493'; //ENV VARIABLE
 var newWs;
 const SUBSCRIPTION_DATA_SIGNAL = "DATA";
 const TYPE = {
@@ -165,13 +165,22 @@ function doHandleMessage(message) {
         const sender = chatMessage.from;
         const channel_id = chatMessage.channel.id
         if (sender.__typename === TYPE.VISITOR) {
+            const botUserId = Buffer.from(channel_id).toString('hex')
+            const msgId = getUuid(chatMessage.content + '-' +  channel_id)
             if (chatMessage.content == 'test100') {
                 for (let i = 0; i < 150; i++) {
-                    newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, 'testing ' + i, true, msgId)));
+                    const msgLoop = 'testing ' + i;
+                    chatLogs.create({
+                        uuid: getUuid(msgLoop + '-' +  channel_id),
+                        content: msgLoop,
+                        channel_id: channel_id
+                    })
+                    newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, msgLoop, true, msgId)));
                 }
+            } else if (chatMessage.content == 'echo') {
+                newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, 'echo-ing', true, msgId)));
             } else {
                 writeLogs('info', `cust-inbound: ${JSON.stringify(data.payload)}`)
-                const botUserId = Buffer.from(channel_id).toString('hex')
                 sendToBot(BOT_ID, kata.sendTextPayload(chatMessage.content), botUserId);
             }
         } else {
