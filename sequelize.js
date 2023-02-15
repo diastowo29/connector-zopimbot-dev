@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize')
 const sessionModel = require('./models/session')
+const chatlogsModel = require('./models/chatlogs')
 
 var sequelize_db;
 
 if (process.env.ENV === 'dev') {
-	sequelize_db = new Sequelize('zopimbot', 'postgres', 'R@hasia123', {
+	sequelize_db = new Sequelize('sw-kata', 'postgres', 'R@hasia', {
 	  host: 'localhost',
 	  dialect: 'postgres'
 	});
@@ -24,6 +25,7 @@ if (process.env.ENV === 'dev') {
 
 
 const zp_session = sessionModel(sequelize_db, Sequelize)
+const chatLogs = chatlogsModel(sequelize_db, Sequelize)
 
 sequelize_db.sync({ force: true })
   .then(() => {
@@ -31,5 +33,6 @@ sequelize_db.sync({ force: true })
     })
 
 module.exports = {
-    zp_session
+    zp_session,
+	chatLogs
 }
