@@ -14,7 +14,7 @@ const axios = require('axios');
 const WebSocket = require('ws');
 
 const CHAT_API_URL = "https://chat-api.zopim.com/graphql/request";
-const APITOKEN = '8Ot0lh5g1YqJl8lSfWOIb7pDSCrrKdg3PocWo8WpBsk5K2L4qFpkvrvOv4Rm5L3f'; //ENV VARIABLE
+const APITOKEN = process.env.ZOPIM_API_TOKEN || 'xxx'; //ENV VARIABLE
 const BOT_ID = 'cd40b30f-ee66-494e-b2d8-50efdb1f0493'; //ENV VARIABLE
 var newWs;
 const SUBSCRIPTION_DATA_SIGNAL = "DATA";
