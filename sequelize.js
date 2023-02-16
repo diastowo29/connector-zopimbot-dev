@@ -3,7 +3,6 @@ const sessionModel = require('./models/session')
 const chatlogsModel = require('./models/chatlogs')
 
 var sequelize_db;
-console.log(process.env.BOT_AUTH)
 if (process.env.NODE_ENV === 'development') {
 	sequelize_db = new Sequelize('zopimbot', 'postgres', 'R@hasia123', {
 	  host: 'localhost',

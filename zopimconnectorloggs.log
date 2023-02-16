@@ -58,3 +58,73 @@
 {"level":"info","message":"cust-inbound: {\"data\":{\"message\":{\"node\":{\"id\":\"W1sibG9jYWxJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFUmxiU0JNYkFCdU95OTE2NzY0MzM4NzguNDgyIl0sWyJ0eXBlIiwiQ0hBVF9NRVNTQUdFIl1d\",\"content\":\"hi\",\"channel\":{\"id\":\"W1sibGNJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFUmxiU0JNYkFCdU95OSJdLFsic2NyaWJlSWQiLCIyMzAyLjExNzk5NzQuVFZ0eGh0djhpdW9nZiJdLFsidHlwZSIsIlZJU0lUT1JfQ0hBTk5FTCJdXQ==\"},\"from\":{\"__typename\":\"Visitor\",\"display_name\":\"Visitor 66905302\"}}}}}","timestamp":"2023-02-15T04:04:38.791Z"}
 {"level":"info","message":"cust-inbound: {\"data\":{\"message\":{\"node\":{\"id\":\"W1sibG9jYWxJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFUmxiU0JNYkFCdU95OTE2NzY0MzM4ODkuMTE3Il0sWyJ0eXBlIiwiQ0hBVF9NRVNTQUdFIl1d\",\"content\":\"test1000\",\"channel\":{\"id\":\"W1sibGNJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFUmxiU0JNYkFCdU95OSJdLFsic2NyaWJlSWQiLCIyMzAyLjExNzk5NzQuVFZ0eGh0djhpdW9nZiJdLFsidHlwZSIsIlZJU0lUT1JfQ0hBTk5FTCJdXQ==\"},\"from\":{\"__typename\":\"Visitor\",\"display_name\":\"Visitor 66905302\"}}}}}","timestamp":"2023-02-15T04:04:49.285Z"}
 {"level":"error","message":"send-to-bot: {\"status\":\"Internal Server Error\"}","timestamp":"2023-02-15T04:04:50.662Z"}
+{"level":"error","message":"openws-error: AxiosError: Request failed with status code 500","timestamp":"2023-02-16T03:41:19.599Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:09:15.499Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:10:19.633Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:11:23.914Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:12:27.969Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:13:32.474Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:14:37.359Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:15:41.226Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:16:45.233Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:17:49.392Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T04:18:39.170Z"}
+{"level":"error","message":"openws-error: Error: getaddrinfo ENOTFOUND chat-api.zopim.com","timestamp":"2023-02-16T04:18:39.221Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T06:51:27.010Z"}
+{"level":"info","message":"cust-inbound: {\"data\":{\"message\":{\"node\":{\"id\":\"W1sibG9jYWxJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFU2xiYlhwZ0dlU2pRYzE2NzY1MzAyOTYuMTE0Il0sWyJ0eXBlIiwiQ0hBVF9NRVNTQUdFIl1d\",\"content\":\"echoi\",\"channel\":{\"id\":\"W1sibGNJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFU2xiYlhwZ0dlU2pRYyJdLFsic2NyaWJlSWQiLCIyMzAyLjExNzk5NzQuVFcwVHlDMGFPVDlIWCJdLFsidHlwZSIsIlZJU0lUT1JfQ0hBTk5FTCJdXQ==\"},\"from\":{\"__typename\":\"Visitor\",\"display_name\":\"Visitor 60360023\"}}}}}","timestamp":"2023-02-16T06:51:36.672Z"}
+{"level":"info","message":"cust-inbound: {\"data\":{\"message\":{\"node\":{\"id\":\"W1sibG9jYWxJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFU2xiYlhwZ0dlU2pRYzE2NzY1MzAzMzkuMTEiXSxbInR5cGUiLCJDSEFUX01FU1NBR0UiXV0=\",\"content\":\"hi\",\"channel\":{\"id\":\"W1sibGNJZCIsIiNzdXBwb3J0Y2hhdDoxMTc5OTc0LTFFU2xiYlhwZ0dlU2pRYyJdLFsic2NyaWJlSWQiLCIyMzAyLjExNzk5NzQuVFcwVHlDMGFPVDlIWCJdLFsidHlwZSIsIlZJU0lUT1JfQ0hBTk5FTCJdXQ==\"},\"from\":{\"__typename\":\"Visitor\",\"display_name\":\"Visitor 60360023\"}}}}}","timestamp":"2023-02-16T06:52:19.589Z"}
+{"level":"error","message":"send-to-bot: {\"status\":\"Internal Server Error\"}","timestamp":"2023-02-16T06:52:21.164Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T06:54:42.751Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T06:55:47.914Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T06:56:53.145Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T06:57:58.506Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:01:37.495Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:11:39.837Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:12:44.565Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:15:26.675Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:16:31.935Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:18:27.595Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:19:32.584Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:20:37.735Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:21:43.455Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:22:53.218Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:23:58.639Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:25:04.052Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:26:08.775Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:27:14.563Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:28:19.850Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:38:19.021Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:39:36.280Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:43:02.481Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:44:07.887Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:45:12.568Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:46:17.068Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T07:51:34.165Z"}
+{"level":"error","message":"openws-error: Error: getaddrinfo ENOTFOUND chat-api.zopim.com","timestamp":"2023-02-16T07:51:34.336Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:04:34.983Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:05:39.800Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:06:44.706Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:07:50.363Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:08:54.677Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:09:59.180Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:11:10.764Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:12:15.789Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:18:38.775Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:22:24.171Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:23:28.881Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:24:33.393Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:25:39.445Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:26:44.260Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:27:48.994Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:28:53.455Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:29:58.450Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:31:04.979Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:32:09.800Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:33:14.307Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:34:20.566Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:35:25.272Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:36:30.092Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T08:37:35.852Z"}
+{"level":"error","message":"ws-closed: 1006","timestamp":"2023-02-16T10:09:22.668Z"}
+{"level":"error","message":"openws-error: Error: getaddrinfo ENOTFOUND chat-api.zopim.com","timestamp":"2023-02-16T10:09:23.009Z"}
+{"level":"error","message":"openws-error: Error: read ECONNRESET","timestamp":"2023-02-16T10:17:19.074Z"}

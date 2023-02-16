@@ -12,6 +12,7 @@ const req = require('../payloader/requestid')
 
 const axios = require('axios');
 const WebSocket = require('ws');
+const chatlogs = require('../models/chatlogs');
 
 const CHAT_API_URL = "https://chat-api.zopim.com/graphql/request";
 const APITOKEN = process.env.ZOPIM_API_TOKEN || 'xxx'; //ENV VARIABLE
@@ -102,15 +103,14 @@ function doHandleOpen() {
      * PING for prevent  *
      * timed out *
      ************************/
-    pingInterval = setInterval(() => {
-      // console.log('PINGs');
+    /* pingInterval = setInterval(() => {
       newWs.send(
         JSON.stringify({
           sig: "PING",
           payload: +new Date()
         })
       );
-    }, 5000);
+    }, 5000); */
   
     /************************
      * Agent status to ONLINE *
@@ -134,9 +134,13 @@ function doHandleClose(reason) {
 
 function doHandleMessage(message) {
     const data = JSON.parse(message);
+
+    console.log(JSON.stringify(data))
     if (data.payload.errors && data.payload.errors.length > 0) {
         console.log(`==== INBOUND ERROR ${data.id} ====`)
-        console.log(JSON.stringify(data))
+
+        setTimeout(retrying, 2000, data.id);
+        // console.log(JSON.stringify(data))
     } else {
         if (data.id === req.REQUEST_ID.MESSAGE_SUBSCRIPTION) {
             messageSubscriptionId = data.payload.data.subscription_id;
@@ -154,7 +158,19 @@ function doHandleMessage(message) {
             console.log('inbound')
             console.log(JSON.stringify(data))
         }
+
+        if (data.payload.data.sendMessage) {
+            const delivered = data.payload.data.sendMessage.success
+            if (delivered) {
+                chatLogs.destroy({
+                    where: {
+                      id: (data.id-100)
+                    }
+                });
+            }
+        }
     }
+
 
     if (
         data.sig === SUBSCRIPTION_DATA_SIGNAL &&
@@ -174,25 +190,22 @@ function doHandleMessage(message) {
                         uuid: getUuid(msgLoop + '-' +  channel_id),
                         content: msgLoop,
                         channel_id: channel_id
+                    }).then(function(msgDb) {
+                        newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, msgLoop, true, msgId, (msgDb.dataValues.id+100))));
                     })
-                    newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, msgLoop, true, msgId)));
                 }
             } else if (chatMessage.content == 'echo') {
-                newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, 'echo-ing', true, msgId)));
+                chatLogs.create({
+                    uuid: msgId,
+                    content: chatMessage.content,
+                    channel_id: channel_id
+                }).then(function (msgDb) {
+                    newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, 'echo-ing', true, msgId, (msgDb.dataValues.id+100))));
+                })
             } else {
                 writeLogs('info', `cust-inbound: ${JSON.stringify(data.payload)}`)
                 sendToBot(BOT_ID, kata.sendTextPayload(chatMessage.content), botUserId);
             }
-        } else {
-            console.log('inbound sig')
-            console.log(JSON.stringify(data))
-            const msgId = getUuid(data.payload.data.message.node.content + '-' +  data.payload.data.message.node.channel.id)
-            chatLogs.destroy({
-                where: {
-                  uuid: msgId
-                }
-            });
-            // console.log(JSON.stringify(data))
         }
     }
 }
@@ -254,6 +267,18 @@ function writeLogs (level, msg) {
         timestamp: logTime,
         message: msg
     });
+}
+
+function retrying (id) {
+    chatLogs.findOne({
+        where: {
+            id: id
+        }
+    }).then(function(retryChat) {
+        console.log(retryChat)
+        // newWs.send(graph.sendMsgPayload(retryChat.))
+    })
+
 }
 
 module.exports = router;

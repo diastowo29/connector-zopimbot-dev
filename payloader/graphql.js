@@ -86,7 +86,7 @@ const udpateAgentStatusPayload = function () {
   return updateAgentStatusQuery;
 }
 
-const sendMsgPayload = function (channel_id, message, backoff, msgId) {
+const sendMsgPayload = function (channel_id, message, backoff, msgId, msgDbId) {
   const sendMessageQuery = {
     payload: {
       query: `mutation {
@@ -101,7 +101,7 @@ const sendMsgPayload = function (channel_id, message, backoff, msgId) {
             }`
     },
     type: "request",
-    id: REQS.REQUEST_ID.SEND_MESSAGE
+    id: msgDbId
   };
   return sendMessageQuery;
 }
