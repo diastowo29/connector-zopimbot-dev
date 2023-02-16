@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const sessionModel = require('./models/session')
+const chatlogsModel = require('./models/chatlogs')
 
 var sequelize_db;
 
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 
 
 const zp_session = sessionModel(sequelize_db, Sequelize)
+const chatLogs = chatlogsModel(sequelize_db, Sequelize)
 
 sequelize_db.sync({ force: true })
   .then(() => {
@@ -31,5 +33,6 @@ sequelize_db.sync({ force: true })
     })
 
 module.exports = {
-    zp_session
+    zp_session,
+	chatLogs
 }

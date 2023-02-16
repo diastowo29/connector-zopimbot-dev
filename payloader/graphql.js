@@ -86,13 +86,14 @@ const udpateAgentStatusPayload = function () {
   return updateAgentStatusQuery;
 }
 
-const sendMsgPayload = function (channel_id, message, backoff) {
+const sendMsgPayload = function (channel_id, message, backoff, msgId) {
   const sendMessageQuery = {
     payload: {
       query: `mutation {
                 sendMessage(
           backoff: ${backoff}
           channel_id: "${channel_id}",
+          msg_id: "${msgId}",
           msg: "${message}"
                 ) {
                     success

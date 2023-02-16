@@ -1,19 +1,21 @@
 var express = require('express');
 const winston = require('winston');
 var router = express.Router();
+const getUuid = require('uuid-by-string');
 const {
-  zp_session
+  zp_session,
+  chatLogs
 } = require('../sequelize')
-// const Sequelize = require('sequelize')
 const graph = require('../payloader/graphql')
 const kata = require('../payloader/kata')
 const req = require('../payloader/requestid')
+
 const axios = require('axios');
 const WebSocket = require('ws');
-const e = require('express');
+
 const CHAT_API_URL = "https://chat-api.zopim.com/graphql/request";
-const APITOKEN = '8Ot0lh5g1YqJl8lSfWOIb7pDSCrrKdg3PocWo8WpBsk5K2L4qFpkvrvOv4Rm5L3f'
-const BOT_ID = '';
+const APITOKEN = '8Ot0lh5g1YqJl8lSfWOIb7pDSCrrKdg3PocWo8WpBsk5K2L4qFpkvrvOv4Rm5L3f'; //ENV VARIABLE
+const BOT_ID = 'cd40b30f-ee66-494e-b2d8-50efdb1f0493'; //ENV VARIABLE
 var newWs;
 const SUBSCRIPTION_DATA_SIGNAL = "DATA";
 const TYPE = {
@@ -21,10 +23,11 @@ const TYPE = {
 };
 const logger = winston.createLogger({
     transports: [
-        new winston.transports.Console(),
+        // new winston.transports.Console(),
         new winston.transports.File({ filename: 'zopimconnectorloggs.log' })
     ]
 });
+var channelsToBeTransferred = [];
 
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Expres' });
@@ -42,8 +45,24 @@ router.post('/handover', function(req, res, next) {
 });
 
 router.post('/reply', function(req, res, next) {
-    writeLogs('info', `bot-reply: ${req.body}`)
-    res.render('index', { title: 'Express' });
+    console.log(req.headers)
+    writeLogs('info', `bot-reply: ${JSON.stringify(req.body)}`)
+    const userId = req.body.userId;
+    var channelId = Buffer.from(userId, 'hex').toString('ascii')
+
+    req.body.messages.forEach(msg => {
+        const msgId = getUuid(msg.content + '-' +  channelId)
+        if (msg.type == 'text') {
+            // console.log(graph.sendMsgPayload(channelId, msg.content, true, msgId))
+            newWs.send(JSON.stringify(graph.sendMsgPayload(channelId, msg.content, true, msgId)));
+            chatLogs.create({
+                uuid: msgId,
+                content: msg.content,
+                channel_id: channelId
+            })
+        }
+    });
+    res.status(200).send({});
 });
 
 let startAgentSessionQueryPayload = graph.startAgentSessionPayload(APITOKEN);
@@ -122,6 +141,19 @@ function doHandleMessage(message) {
         if (data.id === req.REQUEST_ID.MESSAGE_SUBSCRIPTION) {
             messageSubscriptionId = data.payload.data.subscription_id;
         }
+        /* if (data.id === req.REQUEST_ID.ADD_TAGS) {
+            console.log(JSON.stringify(data))
+        } */
+        
+        if (data.id === req.REQUEST_ID.GET_DEPARTMENTS) {
+            const deptList = data.payload.data.departments.edges
+            newWs.send(JSON.stringify(graph.transferToDepartmentPayload(channelsToBeTransferred.pop(), deptList[0].node.id)));
+        }
+
+        if (data.id === req.REQUEST_ID.SEND_MESSAGE) {
+            console.log('inbound')
+            console.log(JSON.stringify(data))
+        }
     }
 
     if (
@@ -133,11 +165,34 @@ function doHandleMessage(message) {
         const sender = chatMessage.from;
         const channel_id = chatMessage.channel.id
         if (sender.__typename === TYPE.VISITOR) {
-            writeLogs('info', `cust-inbound: ${JSON.stringify(data.payload)}`)
-            console.log(`[message] Received: '${chatMessage.content}' from: '${sender.display_name}'`);
-            /* ECHO back to Customer - for testing */
-            newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, chatMessage.content, true)));
-            // sendToBot(BOT_ID, kata.sendTextPayload(chatMessage.content), channel_id);
+            const botUserId = Buffer.from(channel_id).toString('hex')
+            const msgId = getUuid(chatMessage.content + '-' +  channel_id)
+            if (chatMessage.content == 'test100') {
+                for (let i = 0; i < 150; i++) {
+                    const msgLoop = 'testing ' + i;
+                    chatLogs.create({
+                        uuid: getUuid(msgLoop + '-' +  channel_id),
+                        content: msgLoop,
+                        channel_id: channel_id
+                    })
+                    newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, msgLoop, true, msgId)));
+                }
+            } else if (chatMessage.content == 'echo') {
+                newWs.send(JSON.stringify(graph.sendMsgPayload(channel_id, 'echo-ing', true, msgId)));
+            } else {
+                writeLogs('info', `cust-inbound: ${JSON.stringify(data.payload)}`)
+                sendToBot(BOT_ID, kata.sendTextPayload(chatMessage.content), botUserId);
+            }
+        } else {
+            console.log('inbound sig')
+            console.log(JSON.stringify(data))
+            const msgId = getUuid(data.payload.data.message.node.content + '-' +  data.payload.data.message.node.channel.id)
+            chatLogs.destroy({
+                where: {
+                  uuid: msgId
+                }
+            });
+            // console.log(JSON.stringify(data))
         }
     }
 }
@@ -152,10 +207,15 @@ function sendToBot (botId, msgPayload, channelId) {
             messages: [msgPayload]
         }
       }).then((response) => {
-        console.log('OK')
+        // console.log('OK')
       }, (error) => {
-        console.log('error')
-        writeLogs('error', `send-to-bot: ${JSON.stringify(error)}`)
+        // console.log('error')
+        // console.log(error.response.data)
+        if (error.response.data) {
+            writeLogs('error', `send-to-bot: ${JSON.stringify(error.response.data)}`)
+        } else {
+            writeLogs('error', `send-to-bot: ${JSON.stringify(error)}`)
+        }
         //   newWs.send(JSON.stringify(sendBotFailMsgPayload(chatMessage.channel.id)));
       });
 }
